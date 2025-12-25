@@ -283,8 +283,7 @@
             animation-delay: 0.9s;
         }
 
-        .skill-tag:nth-child(6) {
-            animation-delay: 1.0s;
+        animation-delay: 1.0s;
         }
 
         @media (max-width: 768px) {
@@ -301,6 +300,25 @@
                 gap: 0.5rem;
                 align-items: center;
             }
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+            background-color: #2563eb;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -322,6 +340,10 @@
                 <a href="https://www.linkedin.com/in/rushan-kadri-a854731b4" target="_blank">LinkedIn</a> /
                 <a href="https://twitter.com">Twitter</a>
             </div>
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <a href="Rushan_Kadri_Resume.jpg" download="Rushan_Kadri_Resume.jpg" class="download-btn">Download
+                Resume</a>
         </div>
     </header>
 
