@@ -356,6 +356,170 @@
             filter: brightness(1.1);
             text-decoration: none;
         }
+
+        /* Chatbot Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: rgba(23, 23, 23, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chat-widget.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px 16px 0 0;
+            font-weight: 600;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close-chat:hover {
+            color: white;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .bot-message {
+            background-color: rgba(255, 255, 255, 0.1);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message {
+            background-color: var(--accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #user-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            color: white;
+            outline: none;
+            font-family: inherit;
+        }
+
+        #user-input:focus {
+            border-color: var(--accent);
+        }
+
+        .send-btn {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #2563eb;
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+        }
+
+        @media (max-width: 480px) {
+            .chat-widget {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .chat-toggle-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -492,7 +656,14 @@
                 </div>
                 <div class="card-subtitle">Kendriya Vidyalaya No.2</div>
                 <div class="card-body" style="margin-top: 0.5rem;">
-                    Completed Higher Secondary Certificate with 89%.
+                    Completed Higher Secondary Certificate.
+                    <div class="progress-label">
+                        <span>Score</span>
+                        <span style="color: var(--accent);">89%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="89%"></div>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -502,12 +673,134 @@
                 </div>
                 <div class="card-subtitle">Euro School International</div>
                 <div class="card-body" style="margin-top: 0.5rem;">
-                    Completed Secondary School Certificate with 72%.
+                    Completed Secondary School Certificate.
+                    <div class="progress-label">
+                        <span>Score</span>
+                        <span style="color: var(--accent);">72%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="72%"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Chatbot UI -->
+    <div id="chat-widget" class="chat-widget">
+        <div class="chat-header">
+            <span>Ask AI Assistant</span>
+            <button onclick="toggleChat()" class="close-chat">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message bot-message">
+                Hello! I am an AI assistant trained on Rushan's resume. Ask me anything!
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="send-btn">Send</button>
+        </div>
+    </div>
+    <button id="chat-toggle" class="chat-toggle-btn" onclick="toggleChat()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Animate Progress Bars
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+            }, 500); // Slight delay for visual effect
+        });
+
+        function toggleChat() {
+            const widget = document.getElementById('chat-widget');
+            const toggle = document.getElementById('chat-toggle');
+            widget.classList.toggle('open');
+
+            if (widget.classList.contains('open')) {
+                toggle.style.transform = 'scale(0)';
+                document.getElementById('user-input').focus();
+            } else {
+                toggle.style.transform = 'scale(1)';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            input.disabled = true;
+
+            // Show loading
+            const loadingId = addLoadingIndicator();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: [{ role: 'user', content: message }]
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const data = await response.json();
+                removeMessage(loadingId);
+                addMessage(data.message, 'bot');
+            } catch (error) {
+                console.error(error);
+                removeMessage(loadingId);
+                addMessage("I'm sorry, I'm having trouble connecting to my brain right now. Please try again later.", 'bot');
+            } finally {
+                input.disabled = false;
+                input.focus();
+            }
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `message ${sender}-message`;
+            div.textContent = text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div.id = 'msg-' + Date.now();
+        }
+
+        function addLoadingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'message bot-message';
+            div.innerHTML = '<span class="typing-indicator">...</span>';
+            div.id = 'loading-' + Date.now();
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div.id;
+        }
+
+        function removeMessage(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+    </script>
 </body>
 
 </html>
