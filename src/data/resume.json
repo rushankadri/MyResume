@@ -1,0 +1,76 @@
+{
+    "profile": {
+        "name": "RUSHAN N KADRI",
+        "role": "Aspiring Software Developer",
+        "tagline": "Passionate IT student with experience in Cloud Architecture & AI.",
+        "location": "India",
+        "email": "kadrirushan112@gmail.com",
+        "social": {
+            "github": "https://github.com",
+            "linkedin": "https://linkedin.com",
+            "twitter": "https://twitter.com"
+        }
+    },
+    "education": [
+        {
+            "degree": "I.MSc IT",
+            "school": "Silver Oak University",
+            "year": "2022-Present"
+        },
+        {
+            "degree": "HSC",
+            "school": "Kendriya Vidyalaya No.2",
+            "year": "2020"
+        },
+        {
+            "degree": "SSC",
+            "school": "Euro School International",
+            "year": "2018"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Python / AI / ML",
+            "level": 90
+        },
+        {
+            "name": "C / C++ / Java",
+            "level": 85
+        },
+        {
+            "name": "Web (HTML/JS/PHP)",
+            "level": 80
+        },
+        {
+            "name": "Cloud / AWS",
+            "level": 75
+        },
+        {
+            "name": "Flutter",
+            "level": 70
+        }
+    ],
+    "experience": [
+        {
+            "id": "exp-1",
+            "company": "Forage (Job Simulation)",
+            "role": "AWS Solutions Architecture",
+            "period": "2023",
+            "description": "Completed industry-backed simulation focused on designing scalable cloud architectures."
+        },
+        {
+            "id": "exp-2",
+            "company": "Forage (Job Simulation)",
+            "role": "Deloitte Technology",
+            "period": "2023",
+            "description": "Gained practical experience in software engineering and technology consulting workflows."
+        },
+        {
+            "id": "exp-3",
+            "company": "Forage (Job Simulation)",
+            "role": "Quantium Software Engineering",
+            "period": "2023",
+            "description": "Worked on data-driven application development and data analysis tasks."
+        }
+    ]
+}

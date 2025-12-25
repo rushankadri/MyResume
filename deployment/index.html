@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rushan N Kadri - Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #171717;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --border: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #a3a3a3);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .role {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
+            /* Ensure it behaves like a block */
+            text-decoration: none;
+            /* Remove underline */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .card-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .card-body {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Background Animation */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            /* Existing styles preserved */
+            background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0f172a, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        /* Card Animation: Staggered Fade In Up */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            opacity: 0;
+            /* Hidden initially */
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Stagger delays for cards (up to 10 cards) */
+        .card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        /* Skill Tags Animation: Pop In */
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            70% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .skill-tag {
+            opacity: 0;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Stagger delays for skills */
+        .skill-tag:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        .skill-tag:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .skill-tag:nth-child(3) {
+            animation-delay: 0.7s;
+        }
+
+        .skill-tag:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .skill-tag:nth-child(5) {
+            animation-delay: 0.9s;
+        }
+
+        .skill-tag:nth-child(6) {
+            animation-delay: 1.0s;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>RUSHAN N KADRI</h1>
+        <div class="role">Aspiring Software Developer</div>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Passionate IT student with experience in Cloud
+            Architecture & AI.</p>
+        <div class="contact-info">
+            <span>India</span>
+            <span>&bull;</span>
+            <a href="mailto:kadrirushan112@gmail.com">kadrirushan112@gmail.com</a>
+            <span>&bull;</span>
+            <div class="social-links">
+                <a href="https://github.com">GitHub</a> /
+                <a href="https://www.linkedin.com/in/rushan-kadri-a854731b4" target="_blank">LinkedIn</a> /
+                <a href="https://twitter.com">Twitter</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-container">
+            <!-- JAVA REMOVED HERE -->
+            <div class="skill-tag">Python / AI / ML</div>
+            <div class="skill-tag">C / C++</div>
+            <div class="skill-tag">Web (HTML/JS/PHP)</div>
+            <div class="skill-tag">Cloud / AWS</div>
+            <div class="skill-tag">Flutter</div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="grid">
+            <a href="certificates/aws.jpg" target="_blank" class="card">
+                <div class="card-header">
+                    <span class="card-title">AWS Solutions Architecture</span>
+                    <span class="card-date">2023</span>
+                </div>
+                <div class="card-subtitle">Forage (Job Simulation)</div>
+                <div class="card-body">
+                    Completed industry-backed simulation focused on designing scalable cloud architectures.
+                </div>
+            </a>
+            <a href="certificates/deloitte.jpg" target="_blank" class="card">
+                <div class="card-header">
+                    <span class="card-title">Deloitte Technology</span>
+                    <span class="card-date">2023</span>
+                </div>
+                <div class="card-subtitle">Forage (Job Simulation)</div>
+                <div class="card-body">
+                    Gained practical experience in software engineering and technology consulting workflows.
+                </div>
+            </a>
+            <a href="certificates/quantium.jpg" target="_blank" class="card">
+                <div class="card-header">
+                    <span class="card-title">Quantium Software Engineering</span>
+                    <span class="card-date">2023</span>
+                </div>
+                <div class="card-subtitle">Forage (Job Simulation)</div>
+                <div class="card-body">
+                    Worked on data-driven application development and data analysis tasks.
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Cloud-AI</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom: 0.5rem;">AI-based troubleshooting system that analyzes complex problems and
+                        recommends solutions using ML models.</p>
+                    <div style="font-size: 0.8rem; color: var(--accent);">Python &bull; Machine Learning &bull; AI</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Web-Wiz</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom: 0.5rem;">Online coding platform enabling users to write, debug, and execute
+                        code in multiple languages.</p>
+                    <div style="font-size: 0.8rem; color: var(--accent);">HTML &bull; JavaScript &bull; Web Dev</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Quick Speak</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom: 0.5rem;">Language translation application focused on fast and accessible
+                        communication across multiple languages.</p>
+                    <div style="font-size: 0.8rem; color: var(--accent);">Translation API &bull; Mobile/Web</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2>Education</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">I.MSc IT</span>
+                    <span class="card-date">2022-Present</span>
+                </div>
+                <div class="card-subtitle">Silver Oak University</div>
+                <div class="card-body" style="margin-top: 0.5rem;">
+                    Began Integrated Master of Science in Information Technology.
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">HSC</span>
+                    <span class="card-date">2020</span>
+                </div>
+                <div class="card-subtitle">Kendriya Vidyalaya No.2</div>
+                <div class="card-body" style="margin-top: 0.5rem;">
+                    Completed Higher Secondary Certificate with 89%.
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">SSC</span>
+                    <span class="card-date">2018</span>
+                </div>
+                <div class="card-subtitle">Euro School International</div>
+                <div class="card-body" style="margin-top: 0.5rem;">
+                    Completed Secondary School Certificate with 72%.
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

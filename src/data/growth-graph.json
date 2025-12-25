@@ -1,0 +1,38 @@
+[
+    {
+        "year": "2020",
+        "score": 20,
+        "role": "Junior Dev",
+        "company": " Freelance"
+    },
+    {
+        "year": "2021",
+        "score": 40,
+        "role": "Full Stack Dev",
+        "company": "Startup Inc"
+    },
+    {
+        "year": "2022",
+        "score": 55,
+        "role": "Full Stack Dev",
+        "company": "Startup Inc"
+    },
+    {
+        "year": "2023",
+        "score": 75,
+        "role": "Frontend Eng",
+        "company": "Tech Corp"
+    },
+    {
+        "year": "2024",
+        "score": 90,
+        "role": "Senior Eng",
+        "company": "Tech Corp"
+    },
+    {
+        "year": "2025",
+        "score": 100,
+        "role": "Lead Eng",
+        "company": "Future Tech"
+    }
+]

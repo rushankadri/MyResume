@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "year": "2023",
+        "title": "Job Simulations",
+        "company": "Forage (AWS, Deloitte, Quantium)",
+        "description": "Completed multiple industry-backed job simulations gaining experience in Cloud, Software Engineering, and Data."
+    },
+    {
+        "id": 2,
+        "year": "2022",
+        "title": "Started I.MSc IT",
+        "company": "Silver Oak University",
+        "description": "Began Integrated Master of Science in Information Technology."
+    },
+    {
+        "id": 3,
+        "year": "2020",
+        "title": "HSC Completed",
+        "company": "Kendriya Vidyalaya No.2",
+        "description": "Completed Higher Secondary Certificate with 89%."
+    },
+    {
+        "id": 4,
+        "year": "2018",
+        "title": "SSC Completed",
+        "company": "Euro School International",
+        "description": "Completed Secondary School Certificate with 72%."
+    }
+]

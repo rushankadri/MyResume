@@ -1,0 +1,40 @@
+[
+    {
+        "id": "p1",
+        "title": "Cloud-AI",
+        "description": "AI-based troubleshooting system that analyzes complex problems and recommends solutions using ML models.",
+        "tech": [
+            "Python",
+            "Machine Learning",
+            "AI"
+        ],
+        "image": "/projects/cloud-ai.png",
+        "demo": "#",
+        "github": "#"
+    },
+    {
+        "id": "p2",
+        "title": "Web-Wiz",
+        "description": "Online coding platform enabling users to write, debug, and execute code in multiple languages.",
+        "tech": [
+            "HTML",
+            "JavaScript",
+            "Web Dev"
+        ],
+        "image": "/projects/web-wiz.png",
+        "demo": "#",
+        "github": "#"
+    },
+    {
+        "id": "p3",
+        "title": "Quick Speak",
+        "description": "Language translation application focused on fast and accessible communication across multiple languages.",
+        "tech": [
+            "Translation API",
+            "Mobile/Web"
+        ],
+        "image": "/projects/quick-speak.png",
+        "demo": "#",
+        "github": "#"
+    }
+]

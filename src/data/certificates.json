@@ -1,0 +1,50 @@
+[
+    {
+        "id": "c1",
+        "title": "AWS Solutions Architecture",
+        "issuer": "Forage",
+        "date": "2023",
+        "image": "/certificates/aws.png",
+        "link": "#"
+    },
+    {
+        "id": "c2",
+        "title": "Deloitte Tech",
+        "issuer": "Forage",
+        "date": "2023",
+        "image": "/certificates/deloitte.png",
+        "link": "#"
+    },
+    {
+        "id": "c3",
+        "title": "Quantum Software Engineering",
+        "issuer": "Forage",
+        "date": "2023",
+        "image": "/certificates/quantium.png",
+        "link": "#"
+    },
+    {
+        "id": "c4",
+        "title": "Intel AI Program",
+        "issuer": "Intel",
+        "date": "2023",
+        "image": "/certificates/intel.png",
+        "link": "#"
+    },
+    {
+        "id": "c5",
+        "title": "IEEE CipherX",
+        "issuer": "IEEE",
+        "date": "2023",
+        "image": "/certificates/ieee.png",
+        "link": "#"
+    },
+    {
+        "id": "c6",
+        "title": "IIT Bombay Illuminate",
+        "issuer": "IIT Bombay",
+        "date": "2023",
+        "image": "/certificates/iitb.png",
+        "link": "#"
+    }
+]
