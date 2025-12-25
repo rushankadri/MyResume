@@ -10,13 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #171717;
-            --text-primary: #ffffff;
-            --text-secondary: #a3a3a3;
+            --bg-color: #030712;
+            /* Darker, richer black */
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
             --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.5);
-            --border: #262626;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -179,111 +180,144 @@
         }
 
         /* Background Animation */
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
 
-            50% {
-                background-position: 100% 50%;
-            }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            /* Increased blur for smoother look */
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
 
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #4f46e5;
+            /* Indigo */
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #7c3aed;
+            /* Violet */
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #2563eb;
+            /* Blue */
+            top: 40%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+
+            0%,
             100% {
-                background-position: 0% 50%;
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(30px, -50px);
+            }
+
+            66% {
+                transform: translate(-20px, 20px);
             }
         }
 
-        body {
-            /* Existing styles preserved */
-            background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0f172a, #0a0a0a);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        /* Card Animation: Staggered Fade In Up */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Glassmorphism Card Style */
         .card {
-            opacity: 0;
-            /* Hidden initially */
-            animation: fadeInUp 0.6s ease-out forwards;
+            background-color: rgba(255, 255, 255, 0.03);
+            /* More transparent */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 1.5rem;
+            border-radius: 16px;
+            /* Slightly more rounded */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Stagger delays for cards (up to 10 cards) */
-        .card:nth-child(1) {
-            animation-delay: 0.1s;
+        .card:hover {
+            transform: translateY(-5px) scale(1.01);
+            background-color: rgba(255, 255, 255, 0.06);
+            border-color: rgba(59, 130, 246, 0.5);
+            /* Accent border on hover */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
         }
 
-        .card:nth-child(2) {
-            animation-delay: 0.2s;
+        /* Add a subtle shine effect */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent);
+            transition: 0.5s;
         }
 
-        .card:nth-child(3) {
-            animation-delay: 0.3s;
+        .card:hover::before {
+            left: 100%;
         }
 
-        .card:nth-child(4) {
-            animation-delay: 0.4s;
+        /* Update Header & Body to fit new style */
+        h1 {
+            font-size: 3.5rem;
+            /* Larger */
+            font-weight: 800;
+            letter-spacing: -1px;
+            /* Enhanced Gradient */
+            background: linear-gradient(to right, #ffffff, #60a5fa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
         }
 
-        .card:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        /* Skill Tags Animation: Pop In */
-        @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-
-            70% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
+        /* Skill Tag Update */
         .skill-tag {
-            opacity: 0;
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d1d5db;
         }
 
-        /* Stagger delays for skills */
-        .skill-tag:nth-child(1) {
-            animation-delay: 0.5s;
-        }
-
-        .skill-tag:nth-child(2) {
-            animation-delay: 0.6s;
-        }
-
-        .skill-tag:nth-child(3) {
-            animation-delay: 0.7s;
-        }
-
-        .skill-tag:nth-child(4) {
-            animation-delay: 0.8s;
-        }
-
-        .skill-tag:nth-child(5) {
-            animation-delay: 0.9s;
-        }
-
-        animation-delay: 1.0s;
+        .skill-tag:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         @media (max-width: 768px) {
@@ -304,26 +338,33 @@
 
         .download-btn {
             display: inline-block;
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), #2563eb);
             color: white !important;
-            padding: 0.75rem 1.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 9999px;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
             text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .download-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
-            background-color: #2563eb;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+            filter: brightness(1.1);
             text-decoration: none;
         }
     </style>
 </head>
 
 <body>
+    <div class="background-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <header>
         <h1>RUSHAN N KADRI</h1>
