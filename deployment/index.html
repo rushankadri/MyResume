@@ -10,13 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #171717;
-            --text-primary: #ffffff;
-            --text-secondary: #a3a3a3;
+            --bg-color: #030712;
+            /* Darker, richer black */
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
             --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.5);
-            --border: #262626;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -179,112 +180,144 @@
         }
 
         /* Background Animation */
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
 
-            50% {
-                background-position: 100% 50%;
-            }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            /* Increased blur for smoother look */
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
 
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #4f46e5;
+            /* Indigo */
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #7c3aed;
+            /* Violet */
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #2563eb;
+            /* Blue */
+            top: 40%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+
+            0%,
             100% {
-                background-position: 0% 50%;
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(30px, -50px);
+            }
+
+            66% {
+                transform: translate(-20px, 20px);
             }
         }
 
-        body {
-            /* Existing styles preserved */
-            background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0f172a, #0a0a0a);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        /* Card Animation: Staggered Fade In Up */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Glassmorphism Card Style */
         .card {
-            opacity: 0;
-            /* Hidden initially */
-            animation: fadeInUp 0.6s ease-out forwards;
+            background-color: rgba(255, 255, 255, 0.03);
+            /* More transparent */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 1.5rem;
+            border-radius: 16px;
+            /* Slightly more rounded */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Stagger delays for cards (up to 10 cards) */
-        .card:nth-child(1) {
-            animation-delay: 0.1s;
+        .card:hover {
+            transform: translateY(-5px) scale(1.01);
+            background-color: rgba(255, 255, 255, 0.06);
+            border-color: rgba(59, 130, 246, 0.5);
+            /* Accent border on hover */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
         }
 
-        .card:nth-child(2) {
-            animation-delay: 0.2s;
+        /* Add a subtle shine effect */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent);
+            transition: 0.5s;
         }
 
-        .card:nth-child(3) {
-            animation-delay: 0.3s;
+        .card:hover::before {
+            left: 100%;
         }
 
-        .card:nth-child(4) {
-            animation-delay: 0.4s;
+        /* Update Header & Body to fit new style */
+        h1 {
+            font-size: 3.5rem;
+            /* Larger */
+            font-weight: 800;
+            letter-spacing: -1px;
+            /* Enhanced Gradient */
+            background: linear-gradient(to right, #ffffff, #60a5fa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
         }
 
-        .card:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        /* Skill Tags Animation: Pop In */
-        @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-
-            70% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
+        /* Skill Tag Update */
         .skill-tag {
-            opacity: 0;
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d1d5db;
         }
 
-        /* Stagger delays for skills */
-        .skill-tag:nth-child(1) {
-            animation-delay: 0.5s;
-        }
-
-        .skill-tag:nth-child(2) {
-            animation-delay: 0.6s;
-        }
-
-        .skill-tag:nth-child(3) {
-            animation-delay: 0.7s;
-        }
-
-        .skill-tag:nth-child(4) {
-            animation-delay: 0.8s;
-        }
-
-        .skill-tag:nth-child(5) {
-            animation-delay: 0.9s;
-        }
-
-        .skill-tag:nth-child(6) {
-            animation-delay: 1.0s;
+        .skill-tag:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         @media (max-width: 768px) {
@@ -302,10 +335,278 @@
                 align-items: center;
             }
         }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #2563eb);
+            color: white !important;
+            padding: 0.8rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+            filter: brightness(1.1);
+            text-decoration: none;
+        }
+
+        /* Chatbot Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: rgba(23, 23, 23, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chat-widget.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px 16px 0 0;
+            font-weight: 600;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close-chat:hover {
+            color: white;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .bot-message {
+            background-color: rgba(255, 255, 255, 0.1);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message {
+            background-color: var(--accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #user-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            color: white;
+            outline: none;
+            font-family: inherit;
+        }
+
+        #user-input:focus {
+            border-color: var(--accent);
+        }
+
+        .send-btn {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #2563eb;
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+        }
+
+        @media (max-width: 480px) {
+            .chat-widget {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .chat-toggle-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Career Growth Graph Styles */
+        .graph-container {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2rem;
+            position: relative;
+            margin-top: 1rem;
+            height: 350px;
+            width: 100%;
+        }
+
+        .growth-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .growth-path {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 8px var(--accent-glow));
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawPath 3s ease-out forwards;
+        }
+
+        @keyframes drawPath {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .graph-point {
+            fill: var(--bg-color);
+            stroke: var(--accent);
+            stroke-width: 3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .graph-point:hover {
+            fill: var(--accent);
+            r: 8;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+
+        .graph-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--accent);
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.85rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            min-width: 150px;
+        }
+
+        .graph-tooltip.visible {
+            opacity: 1;
+        }
+
+        .axis-label {
+            fill: var(--text-secondary);
+            font-size: 12px;
+            font-family: inherit;
+        }
     </style>
 </head>
 
 <body>
+    <div class="background-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <header>
         <h1>RUSHAN N KADRI</h1>
@@ -322,6 +623,10 @@
                 <a href="https://www.linkedin.com/in/rushan-kadri-a854731b4" target="_blank">LinkedIn</a> /
                 <a href="https://twitter.com">Twitter</a>
             </div>
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <a href="RUSHAN_KADRI_RESUME.jpg" download="Rushan_Kadri_Resume.jpg" class="download-btn">Download
+                Resume</a>
         </div>
     </header>
 
@@ -409,6 +714,16 @@
         </div>
     </section>
 
+    <section id="career-growth">
+        <h2>Career Growth</h2>
+        <div class="graph-container">
+            <div id="graph-tooltip" class="graph-tooltip"></div>
+            <svg id="growth-svg" class="growth-svg" viewBox="0 0 800 300" preserveAspectRatio="none">
+                <!-- SVG content will be injected by JS -->
+            </svg>
+        </div>
+    </section>
+
     <section id="education">
         <h2>Education</h2>
         <div class="grid">
@@ -429,7 +744,14 @@
                 </div>
                 <div class="card-subtitle">Kendriya Vidyalaya No.2</div>
                 <div class="card-body" style="margin-top: 0.5rem;">
-                    Completed Higher Secondary Certificate with 89%.
+                    Completed Higher Secondary Certificate.
+                    <div class="progress-label">
+                        <span>Score</span>
+                        <span style="color: var(--accent);">89%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="89%"></div>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -439,12 +761,210 @@
                 </div>
                 <div class="card-subtitle">Euro School International</div>
                 <div class="card-body" style="margin-top: 0.5rem;">
-                    Completed Secondary School Certificate with 72%.
+                    Completed Secondary School Certificate.
+                    <div class="progress-label">
+                        <span>Score</span>
+                        <span style="color: var(--accent);">72%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="72%"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Chatbot UI -->
+    <div id="chat-widget" class="chat-widget">
+        <div class="chat-header">
+            <span>Ask AI Assistant</span>
+            <button onclick="toggleChat()" class="close-chat">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message bot-message">
+                Hello! I am an AI assistant trained on Rushan's resume. Ask me anything!
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="send-btn">Send</button>
+        </div>
+    </div>
+    <button id="chat-toggle" class="chat-toggle-btn" onclick="toggleChat()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </button>
+
+    <script>
+        const growthData = [
+            { "year": "2020", "score": 20, "role": "Junior Dev", "company": "Freelance" },
+            { "year": "2021", "score": 40, "role": "Full Stack Dev", "company": "Startup Inc" },
+            { "year": "2022", "score": 55, "role": "Full Stack Dev", "company": "Startup Inc" },
+            { "year": "2023", "score": 75, "role": "Frontend Eng", "company": "Tech Corp" },
+            { "year": "2024", "score": 90, "role": "Senior Eng", "company": "Tech Corp" },
+            { "year": "2025", "score": 100, "role": "Lead Eng", "company": "Future Tech" }
+        ];
+
+        function initGrowthGraph() {
+            const svg = document.getElementById('growth-svg');
+            if (!svg) return;
+
+            const padding = 50;
+            const width = 800;
+            const height = 300;
+
+            const xStep = (width - 2 * padding) / (growthData.length - 1);
+            const yScale = (height - 2 * padding) / 100;
+
+            let pathD = "";
+            let pointsHTML = "";
+            let labelsHTML = "";
+
+            growthData.forEach((d, i) => {
+                const x = padding + i * xStep;
+                const y = height - padding - (d.score * yScale);
+
+                if (i === 0) pathD += `M ${x} ${y}`;
+                else pathD += ` L ${x} ${y}`;
+
+                pointsHTML += `
+                    <circle 
+                        cx="${x}" cy="${y}" r="6" 
+                        class="graph-point"
+                        onmouseenter="showTooltip(event, ${i})"
+                        onmouseleave="hideTooltip()"
+                    />
+                `;
+
+                labelsHTML += `
+                    <text x="${x}" y="${height - 15}" class="axis-label" text-anchor="middle">${d.year}</text>
+                `;
+            });
+
+            svg.innerHTML = `
+                <path class="growth-path" d="${pathD}" />
+                ${pointsHTML}
+                ${labelsHTML}
+            `;
+        }
+
+        function showTooltip(e, index) {
+            const d = growthData[index];
+            const tooltip = document.getElementById('graph-tooltip');
+            const container = document.querySelector('.graph-container');
+            const rect = container.getBoundingClientRect();
+
+            tooltip.innerHTML = `
+                <strong>${d.year}</strong><br/>
+                <span style="color:var(--accent)">${d.role}</span><br/>
+                <small>${d.company}</small><br/>
+                Skill Score: ${d.score}%
+            `;
+
+            tooltip.classList.add('visible');
+
+            const x = e.clientX - rect.left + 15;
+            const y = e.clientY - rect.top - 80;
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y}px`;
+        }
+
+        function hideTooltip() {
+            document.getElementById('graph-tooltip').classList.remove('visible');
+        }
+
+        // Animate Progress Bars & Init Graph
+        window.addEventListener('load', () => {
+            initGrowthGraph();
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+            }, 500);
+        });
+
+        function toggleChat() {
+            const widget = document.getElementById('chat-widget');
+            const toggle = document.getElementById('chat-toggle');
+            widget.classList.toggle('open');
+
+            if (widget.classList.contains('open')) {
+                toggle.style.transform = 'scale(0)';
+                document.getElementById('user-input').focus();
+            } else {
+                toggle.style.transform = 'scale(1)';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+            input.disabled = true;
+
+            const loadingId = addLoadingIndicator();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: [{ role: 'user', content: message }]
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const data = await response.json();
+                removeMessage(loadingId);
+                addMessage(data.message, 'bot');
+            } catch (error) {
+                console.error(error);
+                removeMessage(loadingId);
+                addMessage("I'm sorry, I'm having trouble connecting to my brain right now. Please try again later.", 'bot');
+            } finally {
+                input.disabled = false;
+                input.focus();
+            }
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `message ${sender}-message`;
+            div.textContent = text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div.id = 'msg-' + Date.now();
+        }
+
+        function addLoadingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'message bot-message';
+            div.innerHTML = '<span class="typing-indicator">...</span>';
+            div.id = 'loading-' + Date.now();
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div.id;
+        }
+
+        function removeMessage(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+    </script>
 </body>
 
 </html>
