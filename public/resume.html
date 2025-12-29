@@ -520,6 +520,84 @@
                 right: 20px;
             }
         }
+
+        /* Career Growth Graph Styles */
+        .graph-container {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2rem;
+            position: relative;
+            margin-top: 1rem;
+            height: 350px;
+            width: 100%;
+        }
+
+        .growth-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .growth-path {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 8px var(--accent-glow));
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawPath 3s ease-out forwards;
+        }
+
+        @keyframes drawPath {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .graph-point {
+            fill: var(--bg-color);
+            stroke: var(--accent);
+            stroke-width: 3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .graph-point:hover {
+            fill: var(--accent);
+            r: 8;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+
+        .graph-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--accent);
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.85rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            min-width: 150px;
+        }
+
+        .graph-tooltip.visible {
+            opacity: 1;
+        }
+
+        .axis-label {
+            fill: var(--text-secondary);
+            font-size: 12px;
+            font-family: inherit;
+        }
     </style>
 </head>
 
@@ -636,6 +714,16 @@
         </div>
     </section>
 
+    <section id="career-growth">
+        <h2>Career Growth</h2>
+        <div class="graph-container">
+            <div id="graph-tooltip" class="graph-tooltip"></div>
+            <svg id="growth-svg" class="growth-svg" viewBox="0 0 800 300" preserveAspectRatio="none">
+                <!-- SVG content will be injected by JS -->
+            </svg>
+        </div>
+    </section>
+
     <section id="education">
         <h2>Education</h2>
         <div class="grid">
@@ -710,13 +798,91 @@
     </button>
 
     <script>
-        // Animate Progress Bars
+        const growthData = [
+            { "year": "2020", "score": 20, "role": "Junior Dev", "company": "Freelance" },
+            { "year": "2021", "score": 40, "role": "Full Stack Dev", "company": "Startup Inc" },
+            { "year": "2022", "score": 55, "role": "Full Stack Dev", "company": "Startup Inc" },
+            { "year": "2023", "score": 75, "role": "Frontend Eng", "company": "Tech Corp" },
+            { "year": "2024", "score": 90, "role": "Senior Eng", "company": "Tech Corp" },
+            { "year": "2025", "score": 100, "role": "Lead Eng", "company": "Future Tech" }
+        ];
+
+        function initGrowthGraph() {
+            const svg = document.getElementById('growth-svg');
+            if (!svg) return;
+
+            const padding = 50;
+            const width = 800;
+            const height = 300;
+
+            const xStep = (width - 2 * padding) / (growthData.length - 1);
+            const yScale = (height - 2 * padding) / 100;
+
+            let pathD = "";
+            let pointsHTML = "";
+            let labelsHTML = "";
+
+            growthData.forEach((d, i) => {
+                const x = padding + i * xStep;
+                const y = height - padding - (d.score * yScale);
+
+                if (i === 0) pathD += `M ${x} ${y}`;
+                else pathD += ` L ${x} ${y}`;
+
+                pointsHTML += `
+                    <circle 
+                        cx="${x}" cy="${y}" r="6" 
+                        class="graph-point"
+                        onmouseenter="showTooltip(event, ${i})"
+                        onmouseleave="hideTooltip()"
+                    />
+                `;
+
+                labelsHTML += `
+                    <text x="${x}" y="${height - 15}" class="axis-label" text-anchor="middle">${d.year}</text>
+                `;
+            });
+
+            svg.innerHTML = `
+                <path class="growth-path" d="${pathD}" />
+                ${pointsHTML}
+                ${labelsHTML}
+            `;
+        }
+
+        function showTooltip(e, index) {
+            const d = growthData[index];
+            const tooltip = document.getElementById('graph-tooltip');
+            const container = document.querySelector('.graph-container');
+            const rect = container.getBoundingClientRect();
+
+            tooltip.innerHTML = `
+                <strong>${d.year}</strong><br/>
+                <span style="color:var(--accent)">${d.role}</span><br/>
+                <small>${d.company}</small><br/>
+                Skill Score: ${d.score}%
+            `;
+
+            tooltip.classList.add('visible');
+
+            const x = e.clientX - rect.left + 15;
+            const y = e.clientY - rect.top - 80;
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y}px`;
+        }
+
+        function hideTooltip() {
+            document.getElementById('graph-tooltip').classList.remove('visible');
+        }
+
+        // Animate Progress Bars & Init Graph
         window.addEventListener('load', () => {
+            initGrowthGraph();
             setTimeout(() => {
                 document.querySelectorAll('.progress-bar').forEach(bar => {
                     bar.style.width = bar.getAttribute('data-width');
                 });
-            }, 500); // Slight delay for visual effect
+            }, 500);
         });
 
         function toggleChat() {
@@ -743,12 +909,10 @@
             const message = input.value.trim();
             if (!message) return;
 
-            // Add user message
             addMessage(message, 'user');
             input.value = '';
             input.disabled = true;
 
-            // Show loading
             const loadingId = addLoadingIndicator();
 
             try {
