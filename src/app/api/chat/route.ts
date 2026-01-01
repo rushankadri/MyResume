@@ -33,29 +33,36 @@ export async function POST(req: Request) {
         const { messages } = await req.json();
         const userMessage = messages[messages.length - 1].content;
 
-        // DEBUG SCRIPT: List Available Models
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`,
+        // Construct the prompt with system context
+        const contents = [
             {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
+                role: "user",
+                parts: [{ text: SYSTEM_PROMPT + "\n\nUser Question: " + userMessage }]
+            }
+        ];
+
+        // Direct Fetch to Google Gemini API (Using confirmed available model)
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ contents }),
             }
         );
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(`ListModels Error: ${response.status} - ${JSON.stringify(errorData)}`);
+            throw new Error(`Gemini API Error: ${response.status} - ${JSON.stringify(errorData)}`);
         }
 
         const data = await response.json();
-        // Filter for generateContent supported models
-        const availableModels = data.models
-            .filter((m: any) => m.supportedGenerationMethods.includes("generateContent"))
-            .map((m: any) => m.name)
-            .join(", ");
+        const text = data.candidates[0].content.parts[0].text;
 
         return NextResponse.json({
-            message: `DEBUG MODE: Available Models for your Key: ${availableModels}`,
+            message: text,
         });
     } catch (error) {
         console.error("Gemini Error:", error);
