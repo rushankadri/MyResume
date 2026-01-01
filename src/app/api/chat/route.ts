@@ -29,8 +29,9 @@ export async function POST(req: Request) {
         );
     }
 
+    console.log("Using API Key:", apiKey ? "Present" : "Missing");
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
     try {
         const { messages } = await req.json();
