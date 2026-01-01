@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     } catch (error) {
         console.error("OpenAI Error:", error);
         return NextResponse.json(
-            { error: "Failed to generate response." },
+            { error: error instanceof Error ? error.message : "Unknown error occurred" },
             { status: 500 }
         );
     }
