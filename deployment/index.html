@@ -798,6 +798,26 @@
         </svg>
     </button>
 
+    <!-- Scroll Reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        ScrollReveal({
+            reset: true,
+            distance: '60px',
+            duration: 2000,
+            delay: 200,
+            rotate: { x: 50, z: 0 }, // 3D Tilt Effect
+            scale: 0.9, // 3D Zoom Effect
+            opacity: 0
+        });
+
+        ScrollReveal().reveal('header', { origin: 'top', rotate: { x: 0 } }); // Keep header flat
+        ScrollReveal().reveal('.role, .contact-info', { origin: 'top' });
+        ScrollReveal().reveal('h2', { origin: 'left', rotate: { x: 0, y: 30 } }); // Side 3D tilt
+        ScrollReveal().reveal('.card, .skill-tag', { interval: 100 }); // Staggered 3D cards
+        ScrollReveal().reveal('.graph-container', { origin: 'bottom', scale: 0.8 });
+    </script>
+
     <script>
         const growthData = [
             { "year": "2020", "score": 20, "role": "Junior Dev", "company": "Freelance" },
