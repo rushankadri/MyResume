@@ -41,9 +41,9 @@ export async function POST(req: Request) {
             }
         ];
 
-        // Direct Fetch to Google Gemini API (Using confirmed available model)
+        // Direct Fetch to Google Gemini API (Using Experimental Free version)
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`,
             {
                 method: "POST",
                 headers: {
