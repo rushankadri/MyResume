@@ -33,36 +33,29 @@ export async function POST(req: Request) {
         const { messages } = await req.json();
         const userMessage = messages[messages.length - 1].content;
 
-        // Construct the prompt with system context
-        const contents = [
-            {
-                role: "user",
-                parts: [{ text: SYSTEM_PROMPT + "\n\nUser Question: " + userMessage }]
-            }
-        ];
-
-        // Direct Fetch to Google Gemini API
+        // DEBUG SCRIPT: List Available Models
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`,
             {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ contents }),
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
             }
         );
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(`Gemini API Error: ${response.status} - ${JSON.stringify(errorData)}`);
+            throw new Error(`ListModels Error: ${response.status} - ${JSON.stringify(errorData)}`);
         }
 
         const data = await response.json();
-        const text = data.candidates[0].content.parts[0].text;
+        // Filter for generateContent supported models
+        const availableModels = data.models
+            .filter((m: any) => m.supportedGenerationMethods.includes("generateContent"))
+            .map((m: any) => m.name)
+            .join(", ");
 
         return NextResponse.json({
-            message: text,
+            message: `DEBUG MODE: Available Models for your Key: ${availableModels}`,
         });
     } catch (error) {
         console.error("Gemini Error:", error);
