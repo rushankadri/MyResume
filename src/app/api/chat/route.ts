@@ -29,30 +29,37 @@ export async function POST(req: Request) {
         );
     }
 
-    console.log("Using API Key:", apiKey ? "Present" : "Missing");
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
-
     try {
         const { messages } = await req.json();
         const userMessage = messages[messages.length - 1].content;
 
-        const chat = model.startChat({
-            history: [
-                {
-                    role: "user",
-                    parts: [{ text: SYSTEM_PROMPT }],
-                },
-                {
-                    role: "model",
-                    parts: [{ text: "Understood. I will answer questions based on your resume context." }],
-                },
-            ],
-        });
+        // Construct the prompt with system context
+        const contents = [
+            {
+                role: "user",
+                parts: [{ text: SYSTEM_PROMPT + "\n\nUser Question: " + userMessage }]
+            }
+        ];
 
-        const result = await chat.sendMessage(userMessage);
-        const response = await result.response;
-        const text = response.text();
+        // Direct Fetch to Google Gemini API
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ contents }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(`Gemini API Error: ${response.status} - ${JSON.stringify(errorData)}`);
+        }
+
+        const data = await response.json();
+        const text = data.candidates[0].content.parts[0].text;
 
         return NextResponse.json({
             message: text,
