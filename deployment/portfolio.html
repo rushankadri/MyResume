@@ -444,8 +444,9 @@
             <a href="RUSHAN_KADRI_RESUME.jpg" download class="btn">Download CV</a>
         </div>
 
-        <div class="home-img">
-            <!-- Placeholder for user image if desired, or abstract shape -->
+        <div class="home-img"
+            style="width: 45vw; height: 500px; display: flex; justify-content: center; align-items: center;">
+            <!-- 3D Canvas will be injected here -->
         </div>
     </section>
 
@@ -573,6 +574,89 @@
             <a href="#home"><i class="fa-solid fa-angle-up"></i></a>
         </div>
     </footer>
+
+    <!-- Three.js for 3D Visuals -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 3D Tech Core Animation
+        const initThreeJS = () => {
+            const container = document.querySelector('.home-img');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create Geometry - Tech Core (Icosahedron)
+            const geometry = new THREE.IcosahedronGeometry(2, 0);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x0ef, // Cyan accent
+                wireframe: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+
+            // Add Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 200;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 8;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0x00eeff,
+                transparent: true,
+                opacity: 0.8
+            });
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            camera.position.z = 5;
+
+            // Mouse Interaction
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX / window.innerWidth - 0.5;
+                mouseY = event.clientY / window.innerHeight - 0.5;
+            });
+
+            // Animation Loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                sphere.rotation.x += 0.005;
+                sphere.rotation.y += 0.005;
+
+                particlesMesh.rotation.y = -mouseX * 0.5;
+                particlesMesh.rotation.x = -mouseY * 0.5;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        };
+
+        // Initialize after DOM load
+        document.addEventListener('DOMContentLoaded', initThreeJS);
+    </script>
 
     <!-- Scroll Reveal -->
     <script src="https://unpkg.com/scrollreveal"></script>
