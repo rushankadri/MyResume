@@ -945,7 +945,10 @@
                     })
                 });
 
-                if (!response.ok) throw new Error('Failed to fetch');
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(`Server Error: ${response.status} ${response.statusText} - ${errorData.error || ''}`);
+                }
 
                 const data = await response.json();
                 removeMessage(loadingId);
@@ -953,7 +956,7 @@
             } catch (error) {
                 console.error(error);
                 removeMessage(loadingId);
-                addMessage("I'm sorry, I'm having trouble connecting to my brain right now. Please try again later.", 'bot');
+                addMessage(`Debug Error: ${error.message}. Please check console.`, 'bot');
             } finally {
                 input.disabled = false;
                 input.focus();
