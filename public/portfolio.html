@@ -491,7 +491,24 @@
             <p>I am a passionate developer with a strong foundation in modern web technologies. I love creating
                 interactive, user-friendly, and responsive websites. My journey involves exploring Cloud Architecture,
                 AI integration, and mastering the latest frontend frameworks.</p>
-            <a href="#" class="btn">Read More</a>
+
+            <div class="about-extra" id="aboutExtra" style="display: none; margin-top: 1.5rem;">
+                <p>Throughout my academic and professional journey, I have gained hands-on experience in developing
+                    scalable web applications, implementing machine learning models, and deploying cloud-based
+                    solutions.
+                    I am proficient in technologies like React, Node.js, Python, and AWS.</p>
+
+                <p>My passion for technology extends beyond coding. I actively participate in hackathons, contribute to
+                    open-source projects, and continuously learn new frameworks to stay ahead in this rapidly evolving
+                    field.
+                    I believe in writing clean, maintainable code and following best practices in software development.
+                </p>
+
+                <p>When I'm not coding, I enjoy exploring emerging technologies, reading tech blogs, and collaborating
+                    with fellow developers to build innovative solutions that make a real-world impact.</p>
+            </div>
+
+            <a href="#" class="btn" id="readMoreBtn" onclick="toggleAbout(event)">Read More</a>
         </div>
     </section>
 
@@ -746,6 +763,23 @@
                 });
             });
         });
+    </script>
+
+    <!-- Toggle About Me Script -->
+    <script>
+        function toggleAbout(event) {
+            event.preventDefault();
+            const extraContent = document.getElementById('aboutExtra');
+            const btn = document.getElementById('readMoreBtn');
+
+            if (extraContent.style.display === 'none') {
+                extraContent.style.display = 'block';
+                btn.textContent = 'Read Less';
+            } else {
+                extraContent.style.display = 'none';
+                btn.textContent = 'Read More';
+            }
+        }
     </script>
 </body>
 
