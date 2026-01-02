@@ -67,6 +67,31 @@
             cursor: default;
         }
 
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 2px solid var(--main-color);
+            border-radius: 4rem;
+            font-size: 1.5rem;
+            color: var(--main-color);
+            font-weight: 500;
+            transition: .3s ease;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: var(--main-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 1rem var(--main-color);
+        }
+
+        .back-btn i {
+            font-size: 1.6rem;
+        }
+
         .navbar a {
             font-size: 1.7rem;
             color: var(--text-color);
@@ -411,7 +436,11 @@
 
     <!-- Header -->
     <header class="header">
-        <a href="#" class="logo">Portfolio</a>
+        <a href="#" class="logo">Portfolio.</a>
+        <a href="resume.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Resume
+        </a>
 
         <i class="fa-solid fa-bars" id="menu-icon"
             style="font-size: 3.6rem; color: var(--text-color); display: none;"></i>
